@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles;
+using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
