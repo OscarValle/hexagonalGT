@@ -2,7 +2,7 @@
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles
+namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles
 {
     public class RegisterVehiclePresenter : IRegisterVehicleOutputPort, IWebApiPresenter
     {

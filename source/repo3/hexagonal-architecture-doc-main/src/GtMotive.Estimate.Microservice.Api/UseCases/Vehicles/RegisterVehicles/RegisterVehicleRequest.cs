@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles
+namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles
 {
     public class RegisterVehicleRequest : IRequest<IWebApiPresenter>
     {

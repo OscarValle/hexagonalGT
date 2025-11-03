@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles;
 using MediatR;
 
-namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles
+namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles
 {
     public class RegisterVehicleHandler(IRegisterVehicleUseCase useCase, RegisterVehiclePresenter presenter) : IRequestHandler<RegisterVehicleRequest, IWebApiPresenter>
     {
