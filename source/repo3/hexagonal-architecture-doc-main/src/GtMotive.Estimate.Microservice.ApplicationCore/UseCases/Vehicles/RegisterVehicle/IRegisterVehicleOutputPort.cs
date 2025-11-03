@@ -1,7 +1,7 @@
 ﻿namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
 {
     /// <summary>
-    /// Intercafe to RegisterVehicleOutputPort.
+    /// Intercafe of RegisterVehicleOutputPort.
     /// </summary>
     public interface IRegisterVehicleOutputPort
     {

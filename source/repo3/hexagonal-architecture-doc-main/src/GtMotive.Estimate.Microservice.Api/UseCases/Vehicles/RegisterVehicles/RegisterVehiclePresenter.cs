@@ -11,6 +11,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles
         public void Ok(RegisterVehicleOutput output)
         {
             ArgumentNullException.ThrowIfNull(output);
+
             ActionResult = new OkObjectResult(new { output.LicensePlate, output.Message });
         }
 

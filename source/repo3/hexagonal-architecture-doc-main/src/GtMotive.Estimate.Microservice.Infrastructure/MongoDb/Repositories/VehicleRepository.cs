@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles;
 using GtMotive.Estimate.Microservice.Domain.Entities;
@@ -23,6 +24,18 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
         }
 
         public Task AddAsync(Vehicle vehicle) => _vehiclesCollection.InsertOneAsync(vehicle);
+
+        public async Task<IEnumerable<Vehicle>> GetAvailableAsync(bool? isAvailable)
+        {
+            var filter = Builders<Vehicle>.Filter.Empty;
+
+            if (isAvailable.HasValue)
+            {
+                filter = Builders<Vehicle>.Filter.Eq(v => v.IsAvailable, isAvailable.Value);
+            }
+
+            return await _vehiclesCollection.Find(filter).ToListAsync();
+        }
 
         public async Task<Vehicle> GetByIdAsync(Guid id)
         {

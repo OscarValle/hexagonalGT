@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Domain.Entities;
 
 namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
@@ -12,7 +14,21 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
         /// Add Vehicle.
         /// </summary>
         /// <param name="vehicle">Vehicle.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        /// <returns>Add a Vehicle.</returns>
         Task AddAsync(Vehicle vehicle);
+
+        /// <summary>
+        /// Get all Available Vehicles.
+        /// </summary>
+        /// <param name="isAvailable">Is Available.</param>
+        /// <returns>IEnumerable of all Available Vehicles.</returns>
+        Task<IEnumerable<Vehicle>> GetAvailableAsync(bool? isAvailable);
+
+        /// <summary>
+        /// Get a Vehicle by Id.
+        /// </summary>
+        /// <param name="id">Vehicle Id.</param>
+        /// <returns>A Vehicle.</returns>
+        Task<Vehicle> GetByIdAsync(Guid id);
     }
 }

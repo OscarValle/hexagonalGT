@@ -14,7 +14,11 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
         private readonly IVehicleRepository _vehicleRepository = vehicleRepository;
         private readonly IRegisterVehicleOutputPort _outputPort = outputPort;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Execute.
+        /// </summary>
+        /// <param name="input">RegisterVehicleInput.</param>
+        /// <returns>Response.</returns>
         public async Task Execute(RegisterVehicleInput input)
         {
             if (input == null)
@@ -35,7 +39,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
                 return;
             }
 
-            var vehicle = new Vehicle(input.LicensePlate, input.Brand, input.Model, input.ManufacturingDate);
+            var vehicle = new Vehicle(input.LicensePlate, input.Brand, input.Model, input.ManufacturingDate, true);
             await _vehicleRepository.AddAsync(vehicle);
 
             _outputPort.Ok(new RegisterVehicleOutput(input.LicensePlate, "Vehicle registered successfully."));

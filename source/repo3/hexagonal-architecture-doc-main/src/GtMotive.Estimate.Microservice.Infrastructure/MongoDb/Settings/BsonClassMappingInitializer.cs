@@ -12,7 +12,6 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Settings
         /// </summary>
         public static void RegisterBsonClasses()
         {
-            // Registrar Vehicle
             if (!BsonClassMap.IsClassMapRegistered(typeof(Vehicle)))
             {
                 BsonClassMap.RegisterClassMap<Vehicle>(cm =>
