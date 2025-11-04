@@ -5,6 +5,7 @@ using GtMotive.Estimate.Microservice.Api.Authorization;
 using GtMotive.Estimate.Microservice.Api.DependencyInjection;
 using GtMotive.Estimate.Microservice.Api.Filters;
 using GtMotive.Estimate.Microservice.Api.UseCases.Rentals.RegisterRentals;
+using GtMotive.Estimate.Microservice.Api.UseCases.Rentals.ReturnVehicles;
 using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.ListVehicles;
 using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles;
 using GtMotive.Estimate.Microservice.ApplicationCore;
@@ -58,6 +59,9 @@ namespace GtMotive.Estimate.Microservice.Api
 
             services.AddScoped<IRegisterRentalUseCase, RegisterRentalUseCase>(); // from ApplicationCore
             services.AddScoped<IRegisterRentalOutputPort, RegisterRentalPresenter>(); // from API
+
+            services.AddScoped<IReturnVehicleUseCase, ReturnVehicleUseCase>(); // from ApplicationCore
+            services.AddScoped<IReturnVehicleOutputPort, ReturnVehiclePresenter>(); // from API
 
             services.AddAuthorization(AuthorizationOptionsExtensions.Configure);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApiConfiguration).GetTypeInfo().Assembly));

@@ -12,7 +12,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.Rentals.RegisterRentals
         {
             ArgumentNullException.ThrowIfNull(output);
 
-            ActionResult = new OkObjectResult(new { output.VehicleId, output.Message });
+            ActionResult = new OkObjectResult(new { output.RentalId, output.VehicleId, output.Message });
         }
 
         public void InvalidRental(string reason)

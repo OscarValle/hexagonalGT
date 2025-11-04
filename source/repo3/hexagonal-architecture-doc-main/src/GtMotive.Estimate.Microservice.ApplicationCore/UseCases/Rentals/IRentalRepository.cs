@@ -25,13 +25,22 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
         Task UpdateAsync(Rental rental);
 
         /// <summary>
-        /// Get all Customer Rentals.
+        /// Get all Customer Rentals between dates.
         /// </summary>
         /// <param name="customerId">Customer Id.</param>
-        /// <param name="isActive">Is Active.</param>
-        /// <param name="referenceDate">Date of reference for the rental, todays date generally.</param>
+        /// <param name="proposedStartDate">ProposedStartDate.</param>
+        /// <param name="proposedEndDate">ProposedEndDate.</param>
         /// <returns>IEnumerable of all Available Rentals.</returns>
-        Task<IEnumerable<Rental>> GetByCustomerIdAsync(string customerId, bool? isActive, DateTime referenceDate);
+        Task<IEnumerable<Rental>> GetOverlappingRentalsAByCustomerAsync(string customerId, DateTime proposedStartDate, DateTime proposedEndDate);
+
+        /// <summary>
+        /// Get all Vehicles Rentals between dates.
+        /// </summary>
+        /// <param name="vehicleId">Vehicle Id.</param>
+        /// <param name="proposedStartDate">ProposedStartDate.</param>
+        /// <param name="proposedEndDate">ProposedEndDate.</param>
+        /// <returns>IEnumerable of Reserved Vehicle Ids.</returns>
+        Task<IEnumerable<Rental>> GetOverlappingRentalsAByVehicleAsync(Guid vehicleId, DateTime proposedStartDate, DateTime proposedEndDate);
 
         /// <summary>
         /// Get all Reserved Vehicle Ids between dates.
@@ -40,15 +49,6 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
         /// <param name="endDate">EndDate.</param>
         /// <returns>IEnumerable of Reserved Vehicle Ids.</returns>
         Task<IEnumerable<Guid>> GetReservedVehicleIdsAsync(DateTime startDate, DateTime endDate);
-
-        /// <summary>
-        /// Get all Reserved Vehicle Ids between dates.
-        /// </summary>
-        /// <param name="vehicleId">Vehicle Id.</param>
-        /// <param name="proposedStartDate">ProposedStartDate.</param>
-        /// <param name="proposedEndDate">ProposedEndDate.</param>
-        /// <returns>IEnumerable of Reserved Vehicle Ids.</returns>
-        Task<IEnumerable<Rental>> GetOverlappingRentalsAsync(Guid vehicleId, DateTime proposedStartDate, DateTime proposedEndDate);
 
         /// <summary>
         /// Get a Rental by Id.

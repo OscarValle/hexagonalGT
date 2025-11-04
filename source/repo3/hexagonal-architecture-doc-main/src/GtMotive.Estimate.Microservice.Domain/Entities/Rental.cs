@@ -8,9 +8,9 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
     /// <param name="vehicleId">The unique identifier of the rented vehicle.</param>
     /// <param name="customerId">The unique identifier of the customer who rented the vehicle.</param>
     /// <param name="startDate">The start date of the rental period.</param>
-    /// <param name="endDate">The end date of the rental period.</param>
+    /// <param name="contractEndDate">The end date of the rental period.</param>
     /// <param name="realEndDate">The real end date of the rental period (real return date).</param>
-    public class Rental(Guid vehicleId, string customerId, DateTime? startDate, DateTime? endDate, DateTime? realEndDate = null)
+    public class Rental(Guid vehicleId, string customerId, DateTime? startDate, DateTime? contractEndDate, DateTime? realEndDate = null)
     {
         /// <summary>
         /// Gets the unique identifier of the rental.
@@ -33,12 +33,17 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
         public DateTime? StartDate { get; private set; } = startDate;
 
         /// <summary>
-        /// Gets the end date of the rental period. Null if the rental is still active.
+        /// Gets the end date of the rental period (planned end date).
         /// </summary>
-        public DateTime? EndDate { get; private set; } = endDate;
+        public DateTime? EndDate { get; private set; } = contractEndDate;
 
         /// <summary>
-        /// Gets the actual end date (return date) of the vehicle. Null if the rental is currently active.
+        /// Gets the contract end date of the rental period.
+        /// </summary>
+        public DateTime? ContractEndDate { get; private set; } = contractEndDate;
+
+        /// <summary>
+        /// Gets the actual end date (real return date) of the vehicle.
         /// </summary>
         public DateTime? RealEndDate { get; private set; } = realEndDate;
 
@@ -49,7 +54,16 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
         /// <returns>Is Currently Active.</returns>
         public bool IsCurrentlyActive(DateTime referenceDate)
         {
-            return RealEndDate == null && referenceDate.Date >= StartDate.Value.Date && referenceDate.Date < EndDate.Value.Date;
+            return !RealEndDate.HasValue && referenceDate.Date >= StartDate.Value && referenceDate.Date <= EndDate.Value;
+        }
+
+        /// <summary>
+        /// Checks if the rental is closed now.
+        /// </summary>
+        /// <returns>Is closed.</returns>
+        public bool IsClosed()
+        {
+            return RealEndDate.HasValue;
         }
 
         /// <summary>
@@ -63,7 +77,8 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
                 throw new InvalidOperationException("This rental has already been returned.");
             }
 
-            RealEndDate = actualReturnDate.Date;
+            EndDate = actualReturnDate;
+            RealEndDate = actualReturnDate;
         }
     }
 }

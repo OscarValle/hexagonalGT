@@ -41,7 +41,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
 
             var validationErrors = ValidateInput(input, todayNow);
 
-            if (validationErrors != string.Empty)
+            if (!string.IsNullOrEmpty(validationErrors))
             {
                 _outputPort.InvalidRental(validationErrors);
                 return;
@@ -56,20 +56,20 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
                 return;
             }
 
-            var startDate = input.StartDate.Value.Date;
-            var endDate = input.EndDate.Value.Date;
+            var startDate = input.StartDate.Value;
+            var endDate = input.EndDate.Value;
 
             // No more than one active rental
-            var activeRentals = await _rentalRepository.GetByCustomerIdAsync(input.CustomerId, true, startDate);
+            var activeRentalsByCustomer = await _rentalRepository.GetOverlappingRentalsAByCustomerAsync(input.CustomerId, startDate, endDate);
 
-            if (activeRentals.Any())
+            if (activeRentalsByCustomer.Any())
             {
-                _outputPort.PersonNotMoreThanOneATime("Person cannot reserve more than one vehicle at a time.");
+                _outputPort.PersonNotMoreThanOneATime("Person cannot reserve more than one vehicle at a time (in the same period).");
                 return;
             }
 
             // Vehicle is not available in all this period (overlapping)
-            var overlappingRentals = await _rentalRepository.GetOverlappingRentalsAsync(input.VehicleId, startDate, endDate);
+            var overlappingRentals = await _rentalRepository.GetOverlappingRentalsAByVehicleAsync(input.VehicleId, startDate, endDate);
 
             if (overlappingRentals.Any())
             {
@@ -81,7 +81,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
             var rental = new Rental(input.VehicleId, input.CustomerId, startDate, endDate);
             await _rentalRepository.AddAsync(rental);
 
-            _outputPort.Ok(new RegisterRentalOutput(input.VehicleId, input.CustomerId, "Rental registered successfully."));
+            _outputPort.Ok(new RegisterRentalOutput(rental.Id, input.VehicleId, input.CustomerId, "Rental registered successfully."));
         }
 
         /// <summary>
@@ -97,15 +97,15 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
                 return "Start date and end date are required for a scheduled rental.";
             }
 
-            if (input.StartDate.Value.Date < referenceDate.Date)
+            if (input.StartDate.Value < referenceDate)
             {
                 return "Start date cannot be in the past.";
             }
 
 #pragma warning disable IDE0046 // Convertir a expresión condicional
-            if (input.EndDate.Value.Date <= input.StartDate.Value.Date)
+            if (input.EndDate.Value <= input.StartDate.Value)
             {
-                return "End date must be after the start date, and not in the same day.";
+                return "End date must be after the start date.";
             }
 #pragma warning restore IDE0046 // Convertir a expresión condicional
 
