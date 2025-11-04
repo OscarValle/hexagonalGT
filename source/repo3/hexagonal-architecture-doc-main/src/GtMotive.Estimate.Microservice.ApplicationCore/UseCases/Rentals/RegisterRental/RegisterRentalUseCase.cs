@@ -41,7 +41,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
 
             var validationErrors = ValidateInput(input, todayNow);
 
-            if (validationErrors != null)
+            if (validationErrors != string.Empty)
             {
                 _outputPort.InvalidRental(validationErrors);
                 return;
@@ -59,21 +59,21 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
             var startDate = input.StartDate.Value.Date;
             var endDate = input.EndDate.Value.Date;
 
-            var overlappingRentals = await _rentalRepository.GetOverlappingRentalsAsync(
-                    input.VehicleId, startDate, endDate);
-
-            if (overlappingRentals.Any())
-            {
-                _outputPort.InvalidRental("Vehicle is not available for the requested date range.");
-                return;
-            }
-
             // No more than one active rental
             var activeRentals = await _rentalRepository.GetByCustomerIdAsync(input.CustomerId, true, startDate);
 
             if (activeRentals.Any())
             {
                 _outputPort.PersonNotMoreThanOneATime("Person cannot reserve more than one vehicle at a time.");
+                return;
+            }
+
+            // Vehicle is not available in all this period (overlapping)
+            var overlappingRentals = await _rentalRepository.GetOverlappingRentalsAsync(input.VehicleId, startDate, endDate);
+
+            if (overlappingRentals.Any())
+            {
+                _outputPort.InvalidRental("Vehicle is not available for the requested date range.");
                 return;
             }
 

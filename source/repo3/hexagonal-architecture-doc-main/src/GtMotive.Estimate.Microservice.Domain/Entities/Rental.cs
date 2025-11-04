@@ -56,7 +56,7 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
         /// Marks the rental as completed by setting the RealEndDate.
         /// </summary>
         /// <param name="actualReturnDate">The date of real return.</param>
-        public void EndRental(DateTime actualReturnDate)
+        public void CloseRental(DateTime actualReturnDate)
         {
             if (RealEndDate.HasValue)
             {

@@ -34,6 +34,23 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
         Task<IEnumerable<Rental>> GetByCustomerIdAsync(string customerId, bool? isActive, DateTime referenceDate);
 
         /// <summary>
+        /// Get all Reserved Vehicle Ids between dates.
+        /// </summary>
+        /// <param name="startDate">StartDate.</param>
+        /// <param name="endDate">EndDate.</param>
+        /// <returns>IEnumerable of Reserved Vehicle Ids.</returns>
+        Task<IEnumerable<Guid>> GetReservedVehicleIdsAsync(DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// Get all Reserved Vehicle Ids between dates.
+        /// </summary>
+        /// <param name="vehicleId">Vehicle Id.</param>
+        /// <param name="proposedStartDate">ProposedStartDate.</param>
+        /// <param name="proposedEndDate">ProposedEndDate.</param>
+        /// <returns>IEnumerable of Reserved Vehicle Ids.</returns>
+        Task<IEnumerable<Rental>> GetOverlappingRentalsAsync(Guid vehicleId, DateTime proposedStartDate, DateTime proposedEndDate);
+
+        /// <summary>
         /// Get a Rental by Id.
         /// </summary>
         /// <param name="id">Rental Id.</param>

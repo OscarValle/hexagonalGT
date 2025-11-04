@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals;
 
 namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles.ListVehicles
 {
@@ -8,10 +9,13 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles.ListV
     /// </summary>
     /// <param name="vehicleRepository">VehicleRepository.</param>
     /// <param name="outputPort">ListVehiclesOutputPort.</param>
-    public sealed class ListVehiclesUseCase(IVehicleRepository vehicleRepository, IListVehiclesOutputPort outputPort) : IListVehiclesUseCase
+    /// <param name="rentalRepository">RentalRepository.</param>
+    public sealed class ListVehiclesUseCase(IVehicleRepository vehicleRepository, IListVehiclesOutputPort outputPort, IRentalRepository rentalRepository) : IListVehiclesUseCase
     {
         private readonly IVehicleRepository _vehicleRepository = vehicleRepository;
         private readonly IListVehiclesOutputPort _outputPort = outputPort;
+
+        private readonly IRentalRepository _rentalRepository = rentalRepository;
 
         /// <summary>
         /// Execute.
@@ -22,8 +26,10 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles.ListV
         {
             ArgumentNullException.ThrowIfNull(input);
 
-            var vehicles = await _vehicleRepository.GetAvailableAsync(input.IsAvailable);
-            var output = new ListVehiclesOutput(vehicles);
+            var reservedVehicleIds = await _rentalRepository.GetReservedVehicleIdsAsync(input.StartDate, input.EndDate);
+            var availableVehicles = await _vehicleRepository.GetAllExcludingIdsAsync(reservedVehicleIds);
+
+            var output = new ListVehiclesOutput(availableVehicles);
             _outputPort.StandardHandle(output);
         }
     }

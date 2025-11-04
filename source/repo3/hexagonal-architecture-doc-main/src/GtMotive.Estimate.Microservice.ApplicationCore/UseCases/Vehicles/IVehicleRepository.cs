@@ -18,17 +18,17 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
         Task AddAsync(Vehicle vehicle);
 
         /// <summary>
-        /// Get all Available Vehicles.
-        /// </summary>
-        /// <param name="isAvailable">Is Available.</param>
-        /// <returns>IEnumerable of all Available Vehicles.</returns>
-        Task<IEnumerable<Vehicle>> GetAvailableAsync(bool? isAvailable);
-
-        /// <summary>
         /// Get a Vehicle by Id.
         /// </summary>
         /// <param name="id">Vehicle Id.</param>
         /// <returns>A Vehicle.</returns>
         Task<Vehicle> GetByIdAsync(Guid id);
+
+        /// <summary>
+        /// Get all Vehicles, excluding some.
+        /// </summary>
+        /// <param name="excludedVehicleIds">List of Ids for excluded.</param>
+        /// <returns>IEnumerable of all Vehicles.</returns>
+        Task<IEnumerable<Vehicle>> GetAllExcludingIdsAsync(IEnumerable<Guid> excludedVehicleIds);
     }
 }

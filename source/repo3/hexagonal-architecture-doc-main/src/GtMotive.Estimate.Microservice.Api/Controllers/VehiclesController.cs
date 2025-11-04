@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.ListVehicles;
 using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles;
 using MediatR;
@@ -19,9 +20,9 @@ namespace GtMotive.Estimate.Microservice.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetVehicles([FromQuery] bool? isAvailable)
+        public async Task<IActionResult> GetVehicles([FromQuery] DateTime startDate, DateTime endDate)
         {
-            var presenter = await _mediator.Send(new ListVehiclesRequest(isAvailable));
+            var presenter = await _mediator.Send(new ListVehiclesRequest(startDate, endDate));
             return presenter.ActionResult;
         }
     }
