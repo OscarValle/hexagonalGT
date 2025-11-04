@@ -27,10 +27,11 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals
         /// <summary>
         /// Get all Customer Rentals.
         /// </summary>
-        /// <param name="customerId">Is Available.</param>
+        /// <param name="customerId">Customer Id.</param>
         /// <param name="isActive">Is Active.</param>
+        /// <param name="referenceDate">Date of reference for the rental, todays date generally.</param>
         /// <returns>IEnumerable of all Available Rentals.</returns>
-        Task<IEnumerable<Rental>> GetByCustomerIdAsync(string customerId, bool? isActive);
+        Task<IEnumerable<Rental>> GetByCustomerIdAsync(string customerId, bool? isActive, DateTime referenceDate);
 
         /// <summary>
         /// Get a Rental by Id.

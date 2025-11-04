@@ -27,15 +27,32 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
 
         public Task UpdateAsync(Rental rental) => _rentalsCollection.ReplaceOneAsync(r => r.Id == rental.Id, rental);
 
-        public async Task<IEnumerable<Rental>> GetByCustomerIdAsync(string customerId, bool? isActive)
+        public async Task<IEnumerable<Rental>> GetByCustomerIdAsync(string customerId, bool? isActive, DateTime referenceDate)
         {
+            var effectiveReferenceDate = referenceDate;
+
             var filter = Builders<Rental>.Filter.Eq(r => r.CustomerId, customerId);
 
             if (isActive.HasValue)
             {
-                var isActiveFilter = Builders<Rental>.Filter.Eq(r => r.IsActive, isActive.Value);
+                FilterDefinition<Rental> dateFilter;
 
-                filter = Builders<Rental>.Filter.And(filter, isActiveFilter);
+                if (isActive.Value)
+                {
+                    var startedFilter = Builders<Rental>.Filter.Lte(r => r.StartDate, effectiveReferenceDate);
+                    var ongoingFilter = Builders<Rental>.Filter.Gte(r => r.EndDate, effectiveReferenceDate);
+
+                    dateFilter = Builders<Rental>.Filter.And(startedFilter, ongoingFilter);
+                }
+                else
+                {
+                    var futureFilter = Builders<Rental>.Filter.Gt(r => r.StartDate, effectiveReferenceDate);
+                    var finishedFilter = Builders<Rental>.Filter.Lt(r => r.EndDate, effectiveReferenceDate);
+
+                    dateFilter = Builders<Rental>.Filter.Or(futureFilter, finishedFilter);
+                }
+
+                filter = Builders<Rental>.Filter.And(filter, dateFilter);
             }
 
             return await _rentalsCollection.Find(filter).ToListAsync();

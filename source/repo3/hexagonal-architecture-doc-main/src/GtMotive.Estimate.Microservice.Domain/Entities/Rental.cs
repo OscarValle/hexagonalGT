@@ -9,7 +9,8 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
     /// <param name="customerId">The unique identifier of the customer who rented the vehicle.</param>
     /// <param name="startDate">The start date of the rental period.</param>
     /// <param name="endDate">The end date of the rental period.</param>
-    public class Rental(Guid vehicleId, string customerId, DateTime? startDate, DateTime? endDate)
+    /// <param name="realEndDate">The real end date of the rental period (real return date).</param>
+    public class Rental(Guid vehicleId, string customerId, DateTime? startDate, DateTime? endDate, DateTime? realEndDate = null)
     {
         /// <summary>
         /// Gets the unique identifier of the rental.
@@ -37,8 +38,32 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
         public DateTime? EndDate { get; private set; } = endDate;
 
         /// <summary>
-        /// Gets a value indicating whether the rental is currently active.
+        /// Gets the actual end date (return date) of the vehicle. Null if the rental is currently active.
         /// </summary>
-        public bool IsActive => EndDate == null;
+        public DateTime? RealEndDate { get; private set; } = realEndDate;
+
+        /// <summary>
+        /// Checks if the rental is active relative to a specific reference date.
+        /// </summary>
+        /// <param name="referenceDate">The date considered "today" for evaluation.</param>
+        /// <returns>Is Currently Active.</returns>
+        public bool IsCurrentlyActive(DateTime referenceDate)
+        {
+            return RealEndDate == null && referenceDate.Date >= StartDate.Value.Date && referenceDate.Date < EndDate.Value.Date;
+        }
+
+        /// <summary>
+        /// Marks the rental as completed by setting the RealEndDate.
+        /// </summary>
+        /// <param name="actualReturnDate">The date of real return.</param>
+        public void EndRental(DateTime actualReturnDate)
+        {
+            if (RealEndDate.HasValue)
+            {
+                throw new InvalidOperationException("This rental has already been returned.");
+            }
+
+            RealEndDate = actualReturnDate.Date;
+        }
     }
 }

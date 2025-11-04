@@ -11,6 +11,8 @@ using GtMotive.Estimate.Microservice.ApplicationCore;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles.ListVehicles;
+using GtMotive.Estimate.Microservice.Domain.Interfaces;
+using GtMotive.Estimate.Microservice.Infrastructure.DateTimeProvider;
 using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +44,8 @@ namespace GtMotive.Estimate.Microservice.Api
 
         public static void AddApiDependencies(this IServiceCollection services)
         {
+            services.AddSingleton<IDateTimeProvider, SystemDateTimeProvider>(); // from Infraestructure
+
             services.AddScoped<IVehicleRepository, VehicleRepository>(); // from Infraestructure
 
             services.AddScoped<IRegisterVehicleUseCase, RegisterVehicleUseCase>(); // from ApplicationCore
