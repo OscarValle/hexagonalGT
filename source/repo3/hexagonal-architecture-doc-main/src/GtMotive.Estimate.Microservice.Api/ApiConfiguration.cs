@@ -4,9 +4,11 @@ using System.Reflection;
 using GtMotive.Estimate.Microservice.Api.Authorization;
 using GtMotive.Estimate.Microservice.Api.DependencyInjection;
 using GtMotive.Estimate.Microservice.Api.Filters;
+using GtMotive.Estimate.Microservice.Api.UseCases.Rentals.RegisterRentals;
 using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.ListVehicles;
 using GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.RegisterVehicles;
 using GtMotive.Estimate.Microservice.ApplicationCore;
+using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles.ListVehicles;
 using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories;
@@ -47,6 +49,11 @@ namespace GtMotive.Estimate.Microservice.Api
 
             services.AddScoped<IListVehiclesUseCase, ListVehiclesUseCase>(); // from ApplicationCore
             services.AddScoped<IListVehiclesOutputPort, ListVehiclesPresenter>(); // from API
+
+            services.AddScoped<IRentalRepository, RentalRepository>(); // from Infraestructure
+
+            services.AddScoped<IRegisterRentalUseCase, RegisterRentalUseCase>(); // from ApplicationCore
+            services.AddScoped<IRegisterRentalOutputPort, RegisterRentalPresenter>(); // from API
 
             services.AddAuthorization(AuthorizationOptionsExtensions.Configure);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApiConfiguration).GetTypeInfo().Assembly));

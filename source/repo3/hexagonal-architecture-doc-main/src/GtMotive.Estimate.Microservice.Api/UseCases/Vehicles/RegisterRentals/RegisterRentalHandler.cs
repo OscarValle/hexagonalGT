@@ -12,7 +12,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.Rentals.RegisterRentals
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            await useCase.Execute(new RegisterRentalInput(request.VehicleId, request.CustomerId, request.StartDate, request.EndDate));
+            await useCase.Execute(new RegisterRentalInput(request.VehicleId.Value, request.CustomerId, request.StartDate, request.EndDate));
             return (RegisterRentalPresenter)presenter;
         }
     }

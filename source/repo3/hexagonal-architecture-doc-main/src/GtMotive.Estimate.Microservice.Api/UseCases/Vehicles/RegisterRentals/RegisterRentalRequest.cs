@@ -7,7 +7,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.Rentals.RegisterRentals
     public class RegisterRentalRequest : IRequest<IWebApiPresenter>
     {
         [Required]
-        public Guid VehicleId { get; init; }
+        public Guid? VehicleId { get; init; }
 
         [Required]
         public string CustomerId { get; init; }

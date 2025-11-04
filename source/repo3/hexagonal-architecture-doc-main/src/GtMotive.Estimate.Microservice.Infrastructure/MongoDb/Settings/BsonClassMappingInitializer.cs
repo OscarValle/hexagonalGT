@@ -29,6 +29,8 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Settings
                     cm.AutoMap();
                     cm.MapIdProperty(r => r.Id)
                       .SetSerializer(new GuidSerializer(GuidRepresentation.Standard));
+                    cm.MapProperty(r => r.VehicleId)
+                      .SetSerializer(new GuidSerializer(GuidRepresentation.Standard));
                 });
             }
         }
