@@ -39,7 +39,7 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
                 return;
             }
 
-            var vehicle = new Vehicle(input.LicensePlate, input.Brand, input.Model, input.ManufacturingDate, true);
+            var vehicle = new Vehicle(input.LicensePlate, input.Brand, input.Model, input.ManufacturingDate);
             await _vehicleRepository.AddAsync(vehicle);
 
             _outputPort.Ok(new RegisterVehicleOutput(input.LicensePlate, "Vehicle registered successfully."));
