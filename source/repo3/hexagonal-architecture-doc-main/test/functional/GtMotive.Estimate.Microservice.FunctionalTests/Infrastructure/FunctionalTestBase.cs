@@ -3,12 +3,14 @@ using Xunit;
 
 namespace GtMotive.Estimate.Microservice.FunctionalTests.Infrastructure
 {
+#pragma warning disable CA1515
+
     [Collection(TestCollections.Functional)]
-    internal abstract class FunctionalTestBase(CompositionRootTestFixture fixture) : IAsyncLifetime
+    public abstract class FunctionalTestBase(CompositionRootTestFixture fixture) : IAsyncLifetime
     {
         public const int QueueWaitingTimeInMilliseconds = 1000;
 
-        protected CompositionRootTestFixture Fixture { get; } = fixture;
+        public CompositionRootTestFixture Fixture { get; } = fixture;
 
         public async Task InitializeAsync()
         {
@@ -20,4 +22,6 @@ namespace GtMotive.Estimate.Microservice.FunctionalTests.Infrastructure
             await Task.CompletedTask;
         }
     }
+#pragma warning restore CA1515
+
 }

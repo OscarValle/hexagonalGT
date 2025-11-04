@@ -25,6 +25,13 @@ namespace GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Vehicles
         Task<Vehicle> GetByIdAsync(Guid id);
 
         /// <summary>
+        /// Get a Vehicle by License Plate.
+        /// </summary>
+        /// <param name="licensePlate">License plate.</param>
+        /// <returns>A Vehicle.</returns>
+        Task<Vehicle> GetByPlateAsync(string licensePlate);
+
+        /// <summary>
         /// Get all Vehicles, excluding some.
         /// </summary>
         /// <param name="excludedVehicleIds">List of Ids for excluded.</param>

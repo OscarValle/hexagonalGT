@@ -22,10 +22,4 @@
     <ProjectReference Include="..\..\..\src\GtMotive.Estimate.Microservice.Infrastructure\GtMotive.Estimate.Microservice.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Api\" />
-    <Folder Include="ApplicationCore\" />
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
 </Project>

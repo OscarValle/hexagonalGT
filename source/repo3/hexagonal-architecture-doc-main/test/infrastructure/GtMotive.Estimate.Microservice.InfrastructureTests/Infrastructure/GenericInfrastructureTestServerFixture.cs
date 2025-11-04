@@ -8,7 +8,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace GtMotive.Estimate.Microservice.InfrastructureTests.Infrastructure
 {
-    internal sealed class GenericInfrastructureTestServerFixture : IDisposable
+#pragma warning disable CA1515
+    public sealed class GenericInfrastructureTestServerFixture : IDisposable
     {
         public GenericInfrastructureTestServerFixture()
         {
@@ -30,4 +31,5 @@ namespace GtMotive.Estimate.Microservice.InfrastructureTests.Infrastructure
             Server?.Dispose();
         }
     }
+#pragma warning restore CA1515
 }

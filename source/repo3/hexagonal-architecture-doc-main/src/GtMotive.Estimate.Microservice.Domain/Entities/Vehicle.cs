@@ -9,8 +9,7 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
     /// <param name="brand">Brand.</param>
     /// <param name="model">Model.</param>
     /// <param name="manufacturingDate">Date.</param>
-    /// <param name="isAvailable">IsAvailable.</param>
-    public class Vehicle(string registrationPlate, string brand, string model, DateTime? manufacturingDate, bool? isAvailable)
+    public class Vehicle(string registrationPlate, string brand, string model, DateTime? manufacturingDate)
     {
         /// <summary>
         /// Gets the unique identifier of the vehicle.
@@ -36,10 +35,5 @@ namespace GtMotive.Estimate.Microservice.Domain.Entities
         /// Gets the manufacturing date.
         /// </summary>
         public DateTime? ManufacturingDate { get; private set; } = manufacturingDate;
-
-        /// <summary>
-        /// Gets a value indicating whether gets if is available.
-        /// </summary>
-        public bool? IsAvailable { get; private set; } = isAvailable;
     }
 }

@@ -12,11 +12,11 @@ namespace GtMotive.Estimate.Microservice.Api.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        [HttpPost("register")]
+        [HttpPost("registerRental")]
         public async Task<IActionResult> RegisterRental([FromBody] RegisterRentalRequest request)
             => (await _mediator.Send(request)).ActionResult;
 
-        [HttpPost("return")]
+        [HttpPost("returnVehicle")]
         public async Task<IActionResult> ReturnVehicle([FromBody] ReturnVehicleRequest request)
             => (await _mediator.Send(request)).ActionResult;
     }

@@ -2,9 +2,11 @@
 
 namespace GtMotive.Estimate.Microservice.InfrastructureTests.Infrastructure
 {
+#pragma warning disable CA1515
     [Collection(TestCollections.TestServer)]
-    internal abstract class InfrastructureTestBase(GenericInfrastructureTestServerFixture fixture)
+    public abstract class InfrastructureTestBase(GenericInfrastructureTestServerFixture fixture)
     {
-        protected GenericInfrastructureTestServerFixture Fixture { get; } = fixture;
+        public GenericInfrastructureTestServerFixture Fixture { get; } = fixture;
     }
+#pragma warning restore CA1515
 }

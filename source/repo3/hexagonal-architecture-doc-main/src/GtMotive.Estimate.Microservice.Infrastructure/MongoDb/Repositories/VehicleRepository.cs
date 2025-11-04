@@ -30,6 +30,11 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
             return await _vehiclesCollection.Find(v => v.Id == id).FirstOrDefaultAsync();
         }
 
+        public async Task<Vehicle> GetByPlateAsync(string licensePlate)
+        {
+            return await _vehiclesCollection.Find(v => v.RegistrationPlate == licensePlate).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Vehicle>> GetAllExcludingIdsAsync(IEnumerable<Guid> excludedVehicleIds)
         {
             var exclusionFilter = Builders<Vehicle>.Filter.Nin(v => v.Id, excludedVehicleIds);

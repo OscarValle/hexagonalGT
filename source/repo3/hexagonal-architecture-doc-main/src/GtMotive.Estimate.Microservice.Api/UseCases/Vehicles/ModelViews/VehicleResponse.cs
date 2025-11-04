@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.ModelViews
 {
-    public sealed class VehicleResponse(Guid id, string licensePlate, string brand, string model, DateTime? manufactureDate, bool? isAvailable)
+    public sealed class VehicleResponse(Guid id, string licensePlate, string brand, string model, DateTime? manufactureDate)
     {
         /// <summary>Gets the vehicle ID.</summary>
         [Required]
@@ -24,9 +24,5 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.ModelViews
         /// <summary>Gets the manufacture date.</summary>
         [Required]
         public DateTime? ManufactureDate { get; } = manufactureDate;
-
-        /// <summary>Gets a value indicating whether indicates whether the vehicle is available.</summary>
-        [Required]
-        public bool? IsAvailable { get; } = isAvailable;
     }
 }

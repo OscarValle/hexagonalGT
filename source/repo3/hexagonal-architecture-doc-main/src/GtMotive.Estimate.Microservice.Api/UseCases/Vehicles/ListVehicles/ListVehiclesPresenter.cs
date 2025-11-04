@@ -15,7 +15,7 @@ namespace GtMotive.Estimate.Microservice.Api.UseCases.Vehicles.ListVehicles
             ArgumentNullException.ThrowIfNull(output);
 
             var vehicles = output.Vehicles.Select(v =>
-                new VehicleResponse(v.Id, v.RegistrationPlate, v.Brand, v.Model, v.ManufacturingDate, v.IsAvailable))
+                new VehicleResponse(v.Id, v.RegistrationPlate, v.Brand, v.Model, v.ManufacturingDate))
             .ToList();
 
             ActionResult = new OkObjectResult(vehicles);

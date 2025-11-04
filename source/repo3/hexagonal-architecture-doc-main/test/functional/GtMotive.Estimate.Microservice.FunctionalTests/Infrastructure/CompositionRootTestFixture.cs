@@ -12,7 +12,8 @@ using Xunit;
 
 namespace GtMotive.Estimate.Microservice.FunctionalTests.Infrastructure
 {
-    internal sealed class CompositionRootTestFixture : IDisposable, IAsyncLifetime
+#pragma warning disable CA1515
+    public sealed class CompositionRootTestFixture : IDisposable, IAsyncLifetime
     {
         private readonly ServiceProvider _serviceProvider;
 
@@ -96,4 +97,6 @@ namespace GtMotive.Estimate.Microservice.FunctionalTests.Infrastructure
             services.AddBaseInfrastructure(true);
         }
     }
+#pragma warning restore CA1515
+
 }
