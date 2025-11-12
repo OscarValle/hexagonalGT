@@ -29,7 +29,7 @@ namespace GtMotive.Estimate.Microservice.Infrastructure
                 services.AddScoped<ITelemetry, NoOpTelemetry>();
             }
 
-            services.AddSingleton<MongoService>();
+            services.AddSingleton<IMongoService, MongoService>();
 
             return new InfrastructureBuilder(services);
         }

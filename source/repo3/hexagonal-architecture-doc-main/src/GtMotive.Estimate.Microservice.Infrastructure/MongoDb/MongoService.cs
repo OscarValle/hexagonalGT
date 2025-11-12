@@ -1,10 +1,11 @@
-﻿using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Settings;
+﻿using GtMotive.Estimate.Microservice.Infrastructure.Interfaces;
+using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb
 {
-    public class MongoService
+    public class MongoService : IMongoService
     {
         public MongoService(IOptions<MongoDbSettings> options)
         {
@@ -19,5 +20,7 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb
         public MongoClient MongoClient { get; }
 
         public IMongoDatabase Database { get; }
+
+        IMongoClient IMongoService.MongoClient => MongoClient;
     }
 }

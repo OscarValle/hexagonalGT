@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GtMotive.Estimate.Microservice.ApplicationCore.UseCases.Rentals;
 using GtMotive.Estimate.Microservice.Domain.Entities;
+using GtMotive.Estimate.Microservice.Infrastructure.Interfaces;
 using GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -13,7 +14,7 @@ namespace GtMotive.Estimate.Microservice.Infrastructure.MongoDb.Repositories
     {
         private readonly IMongoCollection<Rental> _rentalsCollection;
 
-        public RentalRepository(MongoService mongoService, IOptions<MongoDbSettings> options)
+        public RentalRepository(IMongoService mongoService, IOptions<MongoDbSettings> options)
         {
             ArgumentNullException.ThrowIfNull(mongoService);
             ArgumentNullException.ThrowIfNull(options);

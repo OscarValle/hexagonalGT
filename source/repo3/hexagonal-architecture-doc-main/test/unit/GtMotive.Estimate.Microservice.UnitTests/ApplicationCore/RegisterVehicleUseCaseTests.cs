@@ -7,8 +7,15 @@ using Xunit;
 
 namespace GtMotive.Estimate.Microservice.UnitTests.ApplicationCore
 {
+    /// <summary>
+    /// Unit tests for <see cref="RegisterVehicleUseCase"/>.
+    /// </summary>
     public sealed class RegisterVehicleUseCaseTests
     {
+        /// <summary>
+        /// Unit test for the Execute method of RegisterVehicleUseCase.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
         [Fact(DisplayName = "Execute must register a vehicle and call standard output.")]
         public async Task ExecuteShouldRegisterVehicleAndCallOutput()
         {
